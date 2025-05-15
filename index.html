@@ -107,7 +107,6 @@
       background-color: #1e90ff;
       color: #ffffff;
       padding: 20px;
-      text-align: left;
       border-bottom: 5px solid #ff6f61;
       position: fixed;
       top: 0;
@@ -121,21 +120,22 @@
       height: 100px;
       z-index: 1001;
     }
+    .title-container {
+      margin-left: 10px;
+      flex: 1;
+    }
     .header h1 {
-      margin: 0 0 5px 20px;
+      margin: 0 0 5px 0;
       font-size: 2em;
       font-weight: 600;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
     .header p {
-      margin: 0 0 0 20px;
+      margin: 0;
       font-size: 1em;
       font-weight: 400;
     }
     .audio-controls {
-      position: absolute;
-      top: 5px;
-      right: 5px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -144,6 +144,7 @@
       border-radius: 15px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       width: 120px;
+      margin: 0 auto;
     }
     .control-buttons {
       display: flex;
@@ -438,6 +439,27 @@
       color: #ccc;
       margin: 0;
     }
+    .visitor-counter {
+      text-align: center;
+      padding: 15px;
+      background-color: #252525;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 300px;
+      font-family: 'Orbitron', sans-serif;
+      color: #00cc99;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+    }
+    .visitor-counter span {
+      font-size: 1.2em;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
     @media (min-width: 768px) {
       .product-card {
         width: calc(20% - 15px);
@@ -461,21 +483,24 @@
       .header {
         padding: 15px;
         height: 80px;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .title-container {
+        margin-left: 0;
+        text-align: center;
       }
       .header h1 {
         font-size: 1.8em;
-        margin-left: 10px;
       }
       .header p {
         font-size: 0.8em;
-        margin-left: 10px;
       }
       .audio-controls {
-        top: 5px;
-        right: 5px;
         width: 100px;
         padding: 4px 6px;
+        margin: 10px auto 0;
       }
       .control-buttons {
         margin-bottom: 4px;
@@ -543,6 +568,10 @@
         width: auto;
         height: auto;
       }
+      .visitor-counter {
+        max-width: 200px;
+        padding: 10px;
+      }
     }
     .megaphone-message {
       display: none;
@@ -569,7 +598,7 @@
 <body onclick="handleFirstClick()">
   <div class="container">
     <div class="header">
-      <div>
+      <div class="title-container">
         <h1>Fábrica Vita Gula</h1>
         <p>Sabor, Tradição e Qualidade Desde 2001</p>
       </div>
@@ -608,11 +637,11 @@
     <div class="nav-menu">
       <a class="nav-item" href="https://gvitagula.github.io/site/" role="tab" onmouseover="playHoverSound()">Página Principal</a>
       <a class="nav-item" href="https://gvitagula.github.io/site/quemsomos" role="tab" onmouseover="playHoverSound()">Quem Somos</a>
-      <div class="nav-item dropdown" onclick="toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">
+      <div class="nav-item dropdown active" onclick="toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">
         <span class="dropdown-toggle">Produtos</span>
         <div class="dropdown-content">
           <div class="submenu-item">
-            <a href="https://gvitagula.github.io/paes/" role="menuitem" onmouseover="playHoverSound()">Pães</a>
+            <a href="https://gvitagula.github.io/paes/" class="active" role="menuitem" onmouseover="playHoverSound()">Pães</a>
             <div class="submenu">
               <a href="https://gvitagula.github.io/paes/hamburguer/" role="menuitem" onmouseover="playHoverSound()">Pão de Hambúrguer</a>
               <a href="https://gvitagula.github.io/paes/hotdog/" role="menuitem" onmouseover="playHoverSound()">Pão de Hot Dog</a>
@@ -794,19 +823,20 @@
           <p>Saboroso e fofinho, ideal para pratos típicos.</p>
         </div>
       </div>
+      <div class="visitor-counter">Visitas: <span id="visit-count">1000</span></div>
     </div>
   </div>
 
   <audio id="background-audio" preload="auto">
-    <source id="audio-source" src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/aud/musica1.mp3" type="audio/mpeg">
+    <source id="audio-source" src="https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/musica1.mp3" type="audio/mpeg">
     Seu navegador não suporta o elemento de áudio.
   </audio>
   <audio id="hover-sound">
-    <source src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/aud/botao1.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/botao1.mp3" type="audio/mpeg">
     Seu navegador não suporta o elemento de áudio.
   </audio>
   <audio id="click-sound">
-    <source src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/aud/botao2.mp3" type="audio/mpeg">
+    <source src="https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/botao2.mp3" type="audio/mpeg">
     Seu navegador não suporta o elemento de áudio.
   </audio>
 
@@ -825,9 +855,9 @@
     let isPlaying = false;
     let hasClicked = false;
     const tracks = [
-      "https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/aud/musica1.mp3",
-      "https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/aud/musica2.mp3",
-      "https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/aud/musica3.mp3"
+      "https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/musica1.mp3",
+      "https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/musica2.mp3",
+      "https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/musica3.mp3"
     ];
     let currentTrackIndex = 0;
 
@@ -906,7 +936,7 @@
           currentTrackIndex = 0;
           audio.src = tracks[0];
           audio.load();
-          audio.play().catch(e => console.error("Fallback playback failed:", e));
+          if (isPlaying) audio.play();
         });
       }
     }
@@ -916,7 +946,7 @@
         audio.src = tracks[index];
         audio.load();
         audio.oncanplaythrough = () => resolve(true);
-        audio.onerror = () => reject(new Error(`Failed to load track: ${tracks[index]}`));
+        audio.onerror = () => reject(false);
       });
     }
 
@@ -951,7 +981,7 @@
         console.error("Failed to load next track:", error);
         currentTrackIndex = 0;
         await playTrack(0);
-        if (isPlaying) audio.play().catch(e => console.error("Fallback playback failed:", e));
+        if (isPlaying) audio.play();
       }
     }
 
@@ -1066,7 +1096,14 @@
       megaphoneMessage.style.display = 'none';
     }
 
-    window.onload = activateMegaphone;
+    document.addEventListener('DOMContentLoaded', () => {
+      let visitCount = parseInt(localStorage.getItem('visitCount') || '1000', 10);
+      visitCount++;
+      localStorage.setItem('visitCount', visitCount);
+      document.getElementById('visit-count').textContent = visitCount;
+      activateMegaphone();
+    });
   </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94025697ea2e6f85',t:'MTc0NzMwODk5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>

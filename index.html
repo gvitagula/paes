@@ -50,23 +50,15 @@
                 var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
                 var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
                 var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
                 var headerRowIndex = filteredData.findIndex((row, index) =>
                   row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
                 );
-                // Fallback
                 if (headerRowIndex === -1 || headerRowIndex > 25) {
                   headerRowIndex = 0;
                 }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
                 csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
                 return csv;
             } catch (e) {
@@ -76,7 +68,8 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+</script>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -703,7 +696,7 @@
     </div>
     <div class="tab-content">
       <h3>Nossos Pães</h3>
-      <button class="expand-btn" onclick="toggleExpand()">Saiba Mais</button>
+      <button class="expand-btn" onclick="toggleExpand()">Exibir</button>
       <div class="expanded-message" id="expanded-message">
         <p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p>
         <button class="next-btn" id="next-btn-message" onclick="nextMessage()">Próxima Mensagem</button>
@@ -711,91 +704,91 @@
       <div class="product-gallery">
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/01-Hamburguer.jpg" alt="Pão de Hambúrguer" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer image');">
+            <img src="https://i.ibb.co/4Z458fsg/01-Humburguer.jpg" alt="Pão de Hambúrguer" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer image');">
           </div>
           <h4>Pão de Hambúrguer</h4>
           <p>Macio, levemente adocicado e ideal para o seu hambúrguer caseiro.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/02-Hotdog.jpg" alt="Pão de Hot Dog" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hot Dog image');">
+            <img src="https://i.ibb.co/fz9tnc87/02-Hotdog.jpg" alt="Pão de Hot Dog" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hot Dog image');">
           </div>
           <h4>Pão de Hot Dog</h4>
           <p>Perfeito para um lanche rápido, com textura fofa e sabor único.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/03-Forma.jpg" alt="Pão de Forma" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma image');">
+            <img src="https://i.ibb.co/4R82Qrhr/03-Forma.jpg" alt="Pão de Forma" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma image');">
           </div>
           <h4>Pão de Forma</h4>
           <p>Versátil e macio, ideal para sanduíches e torradas.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/04-Leite.jpg" alt="Pão de Leite" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Leite image');">
+            <img src="https://i.ibb.co/JRNjcqf9/04-Leite.jpg" alt="Pão de Leite" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Leite image');">
           </div>
           <h4>Pão de Leite</h4>
           <p>Sabor suave, macio e perfeito para acompanhar café.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/05-Forma_integral.jpg" alt="Pão de Forma Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Integral image');">
+            <img src="https://i.ibb.co/8g2y0rGL/05-Forma-integral.jpg" alt="Pão de Forma Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Integral image');">
           </div>
           <h4>Pão de Forma Integral</h4>
           <p>Saudável e nutritivo, rico em fibras naturais.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/06-Hamburgao.jpg" alt="Pão de Hambúrgão" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrgão image');">
+            <img src="https://i.ibb.co/TDN8ZRv0/06-Hamburgao.jpg" alt="Pão de Hambúrgão" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrgão image');">
           </div>
           <h4>Pão de Hambúrgão</h4>
           <p>Robustez e sabor, ideal para hambúrgueres grandes.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/07-PicNic.jpg" alt="Pão de Pic Nic" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic image');">
+            <img src="https://i.ibb.co/p6TFCym6/07-Pic-Nic.jpg" alt="Pão de Pic Nic" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic image');">
           </div>
           <h4>Pão de Pic Nic</h4>
           <p>Leve e crocante, perfeito para lanches ao ar livre.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/08-PicNicIntegral.jpg" alt="Pão de Pic Nic Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic Integral image');">
+            <img src="https://i.ibb.co/Wpz5X2mr/08-Pic-Nic-Integral.jpg" alt="Pão de Pic Nic Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic Integral image');">
           </div>
           <h4>Pão de Pic Nic Integral</h4>
           <p>Opção saudável com sabor rústico.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/09-HamburguerBrioche.jpg" alt="Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer Brioche image');">
+            <img src="https://i.ibb.co/yFZp0Nd2/10-Mini-Hamburguer-Brioche.jpg" alt="Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer Brioche image');">
           </div>
           <h4>Pão de Hambúrguer Brioche</h4>
           <p>Doce e macio, eleva qualquer hambúrguer.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/10-MiniHamburguerBrioche.jpg" alt="Mini Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Mini Pão de Hambúrguer Brioche image');">
+            <img src="https://i.ibb.co/mrv9Dj60/09-Hamburguer-Brioche.jpg" alt="Mini Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Mini Pão de Hambúrguer Brioche image');">
           </div>
           <h4>Mini Pão de Hambúrguer Brioche</h4>
           <p>Pequeno, mas cheio de sabor e sofisticação.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/11-Briochinho.jpg" alt="Briochinho" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Briochinho image');">
+            <img src="https://i.ibb.co/Qv97G6Kb/11-Briochinho.jpg" alt="Briochinho" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Briochinho image');">
           </div>
           <h4>Briochinho</h4>
           <p>Pequeno e delicado, ideal para petiscos.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/12-FormaBrioche.jpg" alt="Pão de Forma Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Brioche image');">
+            <img src="https://i.ibb.co/Lzd7dDdM/12-Forma-Brioche.jpg" alt="Pão de Forma Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Brioche image');">
           </div>
           <h4>Pão de Forma Brioche</h4>
           <p>Amanteigado e macio, perfeito para sanduíches.</p>
         </div>
         <div class="product-card">
           <div class="image-wrapper">
-            <img src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/14-PaoArabe.jpg" alt="Pão Árabe" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão Árabe image');">
+            <img src="https://i.ibb.co/PzwjD7rv/14-Pao-Arabe.jpg" alt="Pão Árabe" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão Árabe image');">
           </div>
           <h4>Pão Árabe</h4>
           <p>Saboroso e fofinho, ideal para pratos típicos.</p>
@@ -804,7 +797,7 @@
     </div>
   </div>
 
-  <audio id="background-audio">
+  <audio id="background-audio" preload="auto">
     <source id="audio-source" src="https://raw.githubusercontent.com/gvitagula/paes/refs/heads/main/aud/musica1.mp3" type="audio/mpeg">
     Seu navegador não suporta o elemento de áudio.
   </audio>
@@ -913,7 +906,7 @@
           currentTrackIndex = 0;
           audio.src = tracks[0];
           audio.load();
-          if (isPlaying) audio.play();
+          audio.play().catch(e => console.error("Fallback playback failed:", e));
         });
       }
     }
@@ -923,7 +916,7 @@
         audio.src = tracks[index];
         audio.load();
         audio.oncanplaythrough = () => resolve(true);
-        audio.onerror = () => reject(false);
+        audio.onerror = () => reject(new Error(`Failed to load track: ${tracks[index]}`));
       });
     }
 
@@ -958,7 +951,7 @@
         console.error("Failed to load next track:", error);
         currentTrackIndex = 0;
         await playTrack(0);
-        if (isPlaying) audio.play();
+        if (isPlaying) audio.play().catch(e => console.error("Fallback playback failed:", e));
       }
     }
 
@@ -1020,10 +1013,11 @@
       if (message.classList.contains('show')) {
         message.innerHTML = messages[messageIndex];
         nextBtn.style.display = messageIndex < messages.length - 1 ? 'inline-block' : 'none';
+        expandBtn.textContent = 'Ocultar';
       } else {
         nextBtn.style.display = 'none';
+        expandBtn.textContent = 'Exibir';
       }
-      expandBtn.textContent = message.classList.contains('show') ? 'Ocultar' : 'Saiba Mais';
       playClickSound();
     }
 

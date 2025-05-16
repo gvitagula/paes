@@ -112,7 +112,7 @@
       border-radius: 15px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       width: 120px;
-      margin: 0 auto;
+      margin-right: 10px;
     }
     .control-buttons {
       display: flex;
@@ -278,18 +278,9 @@
       background-color: #ff6f61;
       color: #ffffff;
     }
-    .dropdown-content .submenu {
-      display: none;
-      position: absolute;
-      left: 100%;
-      top: 0;
-      background-color: #3a3a3a;
-      min-width: 150px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-      border-radius: 5px;
-    }
-    .dropdown-content .submenu-item:hover .submenu {
-      display: block;
+    .dropdown-content a.active {
+      background-color: #ff6f61;
+      color: #ffffff;
     }
     .tab-content {
       padding: 20px;
@@ -455,9 +446,11 @@
       justify-content: center;
       border-radius: 5px;
       transition: background 0.3s ease;
-      visibility: visible;
-      opacity: 1;
+      visibility: visible !important;
+      opacity: 1 !important;
       pointer-events: auto;
+      z-index: 10002;
+      box-sizing: border-box;
     }
     .zoom-btn:hover {
       background: rgba(255, 255, 255, 0.4);
@@ -514,54 +507,55 @@
         padding-top: 130px;
       }
       .header {
-        padding: 15px;
+        padding: 10px;
         height: 80px;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
       }
       .title-container {
-        margin-left: 0;
-        text-align: center;
+        margin-left: 10px;
+        text-align: left;
+        flex: 1;
       }
       .header h1 {
-        font-size: 1.8em;
+        font-size: 1.5em;
       }
       .header p {
-        font-size: 0.8em;
+        font-size: 0.7em;
       }
       .audio-controls {
-        width: 100px;
+        width: 80px;
         padding: 4px 6px;
-        margin: 10px auto 0;
+        margin-right: 10px;
       }
       .control-buttons {
         margin-bottom: 4px;
       }
       .control-buttons .control-btn {
-        font-size: 0.9em;
-        margin: 0 4px;
+        font-size: 0.8em;
+        margin: 0 3px;
       }
       .control-buttons .play-pause-btn {
-        width: 20px;
-        height: 20px;
-        font-size: 0.9em;
+        width: 18px;
+        height: 18px;
+        font-size: 0.8em;
       }
       .volume-icon {
-        width: 20px;
-        height: 20px;
-        margin-top: 6px;
+        width: 18px;
+        height: 18px;
+        margin-top: 4px;
       }
       .volume-icon svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
       }
       .waveform {
-        height: 10px;
-        padding: 0 4px;
+        height: 8px;
+        padding: 0 3px;
       }
       .waveform .bar {
-        width: 1.5px;
+        width: 1px;
       }
       .nav-menu {
         flex-direction: row;
@@ -677,36 +671,10 @@
       <div class="nav-item dropdown active" onclick="toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">
         <span class="dropdown-toggle">Produtos</span>
         <div class="dropdown-content">
-          <div class="submenu-item">
-            <a href="https://gvitagula.github.io/paes/" class="active" role="menuitem" onmouseover="playHoverSound()">Pães</a>
-            <div class="submenu">
-              <a href="https://gvitagula.github.io/paes/hamburguer/" role="menuitem" onmouseover="playHoverSound()">Pão de Hambúrguer</a>
-              <a href="https://gvitagula.github.io/paes/hotdog/" role="menuitem" onmouseover="playHoverSound()">Pão de Hot Dog</a>
-              <a href="https://gvitagula.github.io/paes/forma/" role="menuitem" onmouseover="playHoverSound()">Pão de Forma</a>
-              <a href="https://gvitagula.github.io/paes/leite/" role="menuitem" onmouseover="playHoverSound()">Pão de Leite</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="https://gvitagula.github.io/biscoitos/" role="menuitem" onmouseover="playHoverSound()">Biscoitos</a>
-            <div class="submenu">
-              <a href="https://gvitagula.github.io/biscoitos/salgado/" role="menuitem" onmouseover="playHoverSound()">Biscoito Salgado</a>
-              <a href="https://gvitagula.github.io/biscoitos/doce/" role="menuitem" onmouseover="playHoverSound()">Biscoito Doce</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="https://gvitagula.github.io/bolos/" role="menuitem" onmouseover="playHoverSound()">Bolos</a>
-            <div class="submenu">
-              <a href="https://gvitagula.github.io/bolos/chocolate/" role="menuitem" onmouseover="playHoverSound()">Bolo de Chocolate</a>
-              <a href="https://gvitagula.github.io/bolos/vanilla/" role="menuitem" onmouseover="playHoverSound()">Bolo de Baunilha</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="https://gvitagula.github.io/+produtos/" role="menuitem" onmouseover="playHoverSound()">+Produtos</a>
-            <div class="submenu">
-              <a href="https://gvitagula.github.io/+produtos/sobremesas/" role="menuitem" onmouseover="playHoverSound()">Sobremesas</a>
-              <a href="https://gvitagula.github.io/+produtos/bebidas/" role="menuitem" onmouseover="playHoverSound()">Bebidas</a>
-            </div>
-          </div>
+          <a href="https://gvitagula.github.io/paes/" class="active" role="menuitem" onmouseover="playHoverSound()">Pães</a>
+          <a href="https://gvitagula.github.io/biscoitos/" role="menuitem" onmouseover="playHoverSound()">Biscoitos</a>
+          <a href="https://gvitagula.github.io/bolos/" role="menuitem" onmouseover="playHoverSound()">Bolos</a>
+          <a href="https://gvitagula.github.io/+produtos/" role="menuitem" onmouseover="playHoverSound()">+Produtos</a>
           <a href="https://gvitagula.github.io/precos/" role="menuitem" onmouseover="playHoverSound()">Preços</a>
         </div>
       </div>
@@ -840,10 +808,10 @@
 
   <div class="zoom-overlay" id="zoom-overlay">
     <div class="zoom-image-container">
-      <img class="zoom-image" id="zoom-image" src="" alt="">
+      <img class="zoom-image" id="zoom-image" src="" alt="Imagem ampliada">
       <div class="zoom-nav">
-        <button class="zoom-btn previous" onclick="navigateZoom(-1)">◄</button>
-        <button class="zoom-btn next" onclick="navigateZoom(1)">►</button>
+        <button class="zoom-btn previous" onclick="navigateZoom(-1)" aria-label="Imagem anterior">◄</button>
+        <button class="zoom-btn next" onclick="navigateZoom(1)" aria-label="Próxima imagem">►</button>
       </div>
     </div>
   </div>
@@ -867,6 +835,7 @@
   </div>
 
   <script>
+    // Inicialização de variáveis
     let volumeLevel = 0;
     const audio = document.getElementById('background-audio');
     const audioSource = document.getElementById('audio-source');
@@ -884,6 +853,7 @@
     let currentZoomIndex = 0;
     let touchStartX = 0;
 
+    // Manipulação do primeiro clique para iniciar áudio
     function handleFirstClick() {
       if (!hasClicked) {
         togglePlayPause();
@@ -891,6 +861,7 @@
       }
     }
 
+    // Efeitos sonoros para hover e clique
     function playHoverSound() {
       if (!hoverSound.paused) hoverSound.pause();
       hoverSound.currentTime = 0;
@@ -903,6 +874,7 @@
       clickSound.play().catch(error => console.error("Click sound playback failed:", error));
     }
 
+    // Controle de volume
     function changeVolume() {
       volumeLevel = (volumeLevel + 1) % 4;
       const volumeIcon = document.getElementById('volume-icon');
@@ -938,6 +910,7 @@
       clickSound.volume = newVolume;
     }
 
+    // Controle de reprodução de áudio
     function togglePlayPause() {
       const playPauseBtn = document.getElementById('play-pause-btn');
       if (isPlaying) {
@@ -1012,6 +985,7 @@
       playNext();
     });
 
+    // Configuração inicial do áudio
     audio.volume = 0.3;
     hoverSound.volume = 0.3;
     clickSound.volume = 0.3;
@@ -1033,13 +1007,16 @@
       console.log("Audio can play through: " + tracks[currentTrackIndex]);
     });
 
+    // Controle do menu dropdown
     function toggleDropdown(event, tabName) {
       event.preventDefault();
       event.stopPropagation();
       const dropdown = event.currentTarget;
       const isOpen = dropdown.classList.contains('open');
       document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
-      if (!isOpen) dropdown.classList.add('open');
+      if (!isOpen && (tabName === 'produtos' || tabName === 'downloads')) {
+        dropdown.classList.add('open');
+      }
       playClickSound();
     }
 
@@ -1052,6 +1029,7 @@
       if (!isInsideDropdown) dropdowns.forEach(dropdown => dropdown.classList.remove('open'));
     });
 
+    // Controle da mensagem expansível
     let messageIndex = 0;
     const messages = [
       `<p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p>`,
@@ -1083,6 +1061,7 @@
       playClickSound();
     }
 
+    // Controle da galeria de imagens
     function openZoom(index) {
       console.log("Opening zoom for index:", index);
       const cards = document.querySelectorAll('.product-card');
@@ -1096,6 +1075,10 @@
       const zoomImage = document.getElementById('zoom-image');
       zoomImage.src = imageSrc;
       zoomOverlay.classList.add('active');
+      const prevBtn = document.querySelector('.zoom-btn.previous');
+      const nextBtn = document.querySelector('.zoom-btn.next');
+      console.log("Previous button visibility:", prevBtn.style.visibility, prevBtn.style.display);
+      console.log("Next button visibility:", nextBtn.style.visibility, nextBtn.style.display);
       playClickSound();
     }
 
@@ -1121,6 +1104,7 @@
       playClickSound();
     }
 
+    // Configuração dos eventos da galeria
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach((card, index) => {
       const img = card.querySelector('img');
@@ -1153,6 +1137,7 @@
       }
     }, { passive: false });
 
+    // Controle da mensagem de oferta
     function activateMegaphone() {
       audio.volume = 1.0;
       const megaphoneMessage = document.getElementById('megaphone-message');
@@ -1165,6 +1150,7 @@
       megaphoneMessage.style.display = 'none';
     }
 
+    // Inicialização da página
     document.addEventListener('DOMContentLoaded', () => {
       let visitCount = parseInt(localStorage.getItem('visitCount') || '1000', 10);
       visitCount++;

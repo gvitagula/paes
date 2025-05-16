@@ -37,39 +37,7 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-</script>
-<!DOCTYPE html>
+        </script><!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -398,36 +366,20 @@
       background-color: #252525;
       border-radius: 10px;
       padding: 10px;
-      width: calc(33.33% - 15px);
-      max-width: 160px;
+      width: calc(50% - 10px);
+      max-width: 140px;
       text-align: center;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       box-sizing: border-box;
-      position: relative;
-    }
-    .product-card .image-wrapper {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      margin: 0 auto;
     }
     .product-card img {
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       border-radius: 5px;
       display: block;
+      margin: 0 auto;
       transition: all 0.3s ease;
       cursor: pointer;
-    }
-    .product-card.zoomed img {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px;
-      height: 400px;
-      z-index: 10000;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     }
     .product-card h4 {
       color: #ff6f61;
@@ -438,6 +390,83 @@
       font-size: 0.75em;
       color: #ccc;
       margin: 0;
+    }
+    .zoom-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      touch-action: none;
+    }
+    .zoom-overlay.active {
+      display: flex;
+    }
+    .zoom-image-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      z-index: 10001;
+    }
+    .zoom-image {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+      opacity: 1;
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+    .zoom-image.fading {
+      opacity: 0;
+    }
+    .zoom-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 360px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 10002;
+      pointer-events: none;
+    }
+    .zoom-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      font-size: 24px;
+      min-width: 30px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .zoom-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+    .zoom-btn.previous {
+      margin-left: 20px;
+    }
+    .zoom-btn.next {
+      margin-right: 20px;
     }
     .visitor-counter {
       text-align: center;
@@ -464,6 +493,10 @@
       .product-card {
         width: calc(20% - 15px);
         max-width: 200px;
+      }
+      .product-card img {
+        width: 140px;
+        height: 140px;
       }
       .product-card h4 {
         font-size: 1em;
@@ -558,15 +591,19 @@
         padding: 8px 12px;
         text-align: center;
       }
-      .product-card {
-        width: calc(33.33% - 15px);
-        max-width: 150px;
+      .zoom-nav {
+        width: 340px;
       }
-      .product-card.zoomed img {
-        max-width: 90vw;
-        max-height: 90vh;
-        width: auto;
-        height: auto;
+      .zoom-btn.previous {
+        margin-left: 15px;
+      }
+      .zoom-btn.next {
+        margin-right: 15px;
+      }
+      .zoom-btn {
+        min-width: 28px;
+        min-height: 28px;
+        font-size: 22px;
       }
       .visitor-counter {
         max-width: 200px;
@@ -731,99 +768,83 @@
         <button class="next-btn" id="next-btn-message" onclick="nextMessage()">Próxima Mensagem</button>
       </div>
       <div class="product-gallery">
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/4Z458fsg/01-Humburguer.jpg" alt="Pão de Hambúrguer" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer image');">
-          </div>
+        <div class="product-card" data-index="0">
+          <img src="https://i.ibb.co/4Z458fsg/01-Humburguer.jpg" alt="Pão de Hambúrguer" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer image');">
           <h4>Pão de Hambúrguer</h4>
           <p>Macio, levemente adocicado e ideal para o seu hambúrguer caseiro.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/fz9tnc87/02-Hotdog.jpg" alt="Pão de Hot Dog" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hot Dog image');">
-          </div>
+        <div class="product-card" data-index="1">
+          <img src="https://i.ibb.co/fz9tnc87/02-Hotdog.jpg" alt="Pão de Hot Dog" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hot Dog image');">
           <h4>Pão de Hot Dog</h4>
           <p>Perfeito para um lanche rápido, com textura fofa e sabor único.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/4R82Qrhr/03-Forma.jpg" alt="Pão de Forma" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma image');">
-          </div>
+        <div class="product-card" data-index="2">
+          <img src="https://i.ibb.co/4R82Qrhr/03-Forma.jpg" alt="Pão de Forma" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma image');">
           <h4>Pão de Forma</h4>
           <p>Versátil e macio, ideal para sanduíches e torradas.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/JRNjcqf9/04-Leite.jpg" alt="Pão de Leite" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Leite image');">
-          </div>
+        <div class="product-card" data-index="3">
+          <img src="https://i.ibb.co/JRNjcqf9/04-Leite.jpg" alt="Pão de Leite" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Leite image');">
           <h4>Pão de Leite</h4>
           <p>Sabor suave, macio e perfeito para acompanhar café.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/8g2y0rGL/05-Forma-integral.jpg" alt="Pão de Forma Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Integral image');">
-          </div>
+        <div class="product-card" data-index="4">
+          <img src="https://i.ibb.co/8g2y0rGL/05-Forma-integral.jpg" alt="Pão de Forma Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Integral image');">
           <h4>Pão de Forma Integral</h4>
           <p>Saudável e nutritivo, rico em fibras naturais.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/TDN8ZRv0/06-Hamburgao.jpg" alt="Pão de Hambúrgão" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrgão image');">
-          </div>
+        <div class="product-card" data-index="5">
+          <img src="https://i.ibb.co/TDN8ZRv0/06-Hamburgao.jpg" alt="Pão de Hambúrgão" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrgão image');">
           <h4>Pão de Hambúrgão</h4>
           <p>Robustez e sabor, ideal para hambúrgueres grandes.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/p6TFCym6/07-Pic-Nic.jpg" alt="Pão de Pic Nic" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic image');">
-          </div>
+        <div class="product-card" data-index="6">
+          <img src="https://i.ibb.co/p6TFCym6/07-Pic-Nic.jpg" alt="Pão de Pic Nic" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic image');">
           <h4>Pão de Pic Nic</h4>
           <p>Leve e crocante, perfeito para lanches ao ar livre.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/Wpz5X2mr/08-Pic-Nic-Integral.jpg" alt="Pão de Pic Nic Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic Integral image');">
-          </div>
+        <div class="product-card" data-index="7">
+          <img src="https://i.ibb.co/Wpz5X2mr/08-Pic-Nic-Integral.jpg" alt="Pão de Pic Nic Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic Integral image');">
           <h4>Pão de Pic Nic Integral</h4>
           <p>Opção saudável com sabor rústico.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/yFZp0Nd2/10-Mini-Hamburguer-Brioche.jpg" alt="Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer Brioche image');">
-          </div>
+        <div class="product-card" data-index="8">
+          <img src="https://i.ibb.co/yFZp0Nd2/10-Mini-Hamburguer-Brioche.jpg" alt="Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer Brioche image');">
           <h4>Pão de Hambúrguer Brioche</h4>
           <p>Doce e macio, eleva qualquer hambúrguer.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/mrv9Dj60/09-Hamburguer-Brioche.jpg" alt="Mini Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Mini Pão de Hambúrguer Brioche image');">
-          </div>
+        <div class="product-card" data-index="9">
+          <img src="https://i.ibb.co/mrv9Dj60/09-Hamburguer-Brioche.jpg" alt="Mini Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Mini Pão de Hambúrguer Brioche image');">
           <h4>Mini Pão de Hambúrguer Brioche</h4>
           <p>Pequeno, mas cheio de sabor e sofisticação.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/Qv97G6Kb/11-Briochinho.jpg" alt="Briochinho" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Briochinho image');">
-          </div>
+        <div class="product-card" data-index="10">
+          <img src="https://i.ibb.co/Qv97G6Kb/11-Briochinho.jpg" alt="Briochinho" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Briochinho image');">
           <h4>Briochinho</h4>
           <p>Pequeno e delicado, ideal para petiscos.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/Lzd7dDdM/12-Forma-Brioche.jpg" alt="Pão de Forma Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Brioche image');">
-          </div>
+        <div class="product-card" data-index="11">
+          <img src="https://i.ibb.co/Lzd7dDdM/12-Forma-Brioche.jpg" alt="Pão de Forma Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Brioche image');">
           <h4>Pão de Forma Brioche</h4>
           <p>Amanteigado e macio, perfeito para sanduíches.</p>
         </div>
-        <div class="product-card">
-          <div class="image-wrapper">
-            <img src="https://i.ibb.co/PzwjD7rv/14-Pao-Arabe.jpg" alt="Pão Árabe" onerror="this.onerror=null; this.src='https://via.placeholder.com/140?text=Imagem+Indisponível'; console.error('Failed to load Pão Árabe image');">
-          </div>
+        <div class="product-card" data-index="12">
+          <img src="https://i.ibb.co/PzwjD7rv/14-Pao-Arabe.jpg" alt="Pão Árabe" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão Árabe image');">
           <h4>Pão Árabe</h4>
           <p>Saboroso e fofinho, ideal para pratos típicos.</p>
         </div>
       </div>
       <div class="visitor-counter">Visitas: <span id="visit-count">1000</span></div>
+    </div>
+  </div>
+
+  <div class="zoom-overlay" id="zoom-overlay">
+    <div class="zoom-image-container">
+      <img class="zoom-image" id="zoom-image" src="" alt="">
+      <div class="zoom-nav">
+        <button class="zoom-btn previous" onclick="navigateZoom(-1)">◄</button>
+        <button class="zoom-btn next" onclick="navigateZoom(1)">►</button>
+      </div>
     </div>
   </div>
 
@@ -860,6 +881,8 @@
       "https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/musica3.mp3"
     ];
     let currentTrackIndex = 0;
+    let currentZoomIndex = 0;
+    let touchStartX = 0;
 
     function handleFirstClick() {
       if (!hasClicked) {
@@ -1060,29 +1083,75 @@
       playClickSound();
     }
 
+    function openZoom(index) {
+      console.log("Opening zoom for index:", index);
+      const cards = document.querySelectorAll('.product-card');
+      if (index < 0 || index >= cards.length) {
+        console.error("Invalid index:", index);
+        return;
+      }
+      currentZoomIndex = index;
+      const imageSrc = cards[index].querySelector('img').src;
+      const zoomOverlay = document.getElementById('zoom-overlay');
+      const zoomImage = document.getElementById('zoom-image');
+      zoomImage.src = imageSrc;
+      zoomOverlay.classList.add('active');
+      playClickSound();
+    }
+
+    function closeZoom() {
+      console.log("Closing zoom");
+      const zoomOverlay = document.getElementById('zoom-overlay');
+      zoomOverlay.classList.remove('active');
+      playClickSound();
+    }
+
+    function navigateZoom(direction) {
+      console.log("Navigating zoom, direction:", direction);
+      const cards = document.querySelectorAll('.product-card');
+      const newIndex = (currentZoomIndex + direction + cards.length) % cards.length;
+      const zoomImage = document.getElementById('zoom-image');
+      zoomImage.classList.add('fading');
+      setTimeout(() => {
+        zoomImage.src = cards[newIndex].querySelector('img').src;
+        zoomImage.classList.remove('fading');
+        currentZoomIndex = newIndex;
+        console.log("Navigated to index:", newIndex);
+      }, 300);
+      playClickSound();
+    }
+
     const productCards = document.querySelectorAll('.product-card');
-    productCards.forEach(card => {
+    productCards.forEach((card, index) => {
       const img = card.querySelector('img');
-      const toggleZoom = (e) => {
+      img.addEventListener('click', () => openZoom(index));
+      img.addEventListener('touchstart', (e) => {
         e.preventDefault();
-        productCards.forEach(otherCard => otherCard.classList.remove('zoomed'));
-        card.classList.toggle('zoomed');
-      };
-      img.addEventListener('click', toggleZoom);
-      img.addEventListener('touchstart', toggleZoom, { passive: true });
+        openZoom(index);
+      }, { passive: false });
     });
 
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.product-card img')) {
-        productCards.forEach(card => card.classList.remove('zoomed'));
+    document.getElementById('zoom-overlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeZoom();
       }
     });
 
-    document.addEventListener('touchstart', (e) => {
-      if (!e.target.closest('.product-card img')) {
-        productCards.forEach(card => card.classList.remove('zoomed'));
+    const zoomImage = document.getElementById('zoom-image');
+    zoomImage.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      touchStartX = e.touches[0].clientX;
+      console.log("Touch start, X:", touchStartX);
+    }, { passive: false });
+
+    zoomImage.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const deltaX = touchEndX - touchStartX;
+      console.log("Touch end, X:", touchEndX, "Delta:", deltaX);
+      if (Math.abs(deltaX) > 50) {
+        navigateZoom(deltaX > 0 ? -1 : 1);
       }
-    });
+    }, { passive: false });
 
     function activateMegaphone() {
       audio.volume = 1.0;
@@ -1104,6 +1173,5 @@
       activateMegaphone();
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94025697ea2e6f85',t:'MTc0NzMwODk5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>

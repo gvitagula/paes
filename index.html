@@ -410,8 +410,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 10000;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10010;
       justify-content: center;
       align-items: center;
     }
@@ -420,24 +420,33 @@
     }
     .zoom-image-container {
       position: relative;
-      max-width: 90%;
-      max-height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
     }
     .zoom-image {
       width: 370px;
-      height: auto;
+      max-height: 90vh;
       object-fit: contain;
       border-radius: 10px;
+      transition: transform 0.3s ease-in-out;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     .zoom-nav {
       position: absolute;
       top: 50%;
-      width: 100%;
-      transform: translateY(-50%);
+      width: 400px; /* 370px (imagem) + 15px de cada lado */
+      transform: translate(-50%, -50%);
+      left: 50%;
       display: flex;
       justify-content: space-between;
-      padding: 0 20px;
       box-sizing: border-box;
+      z-index: 10011;
     }
     .zoom-btn {
       background: rgba(255, 111, 97, 0.7);
@@ -447,10 +456,16 @@
       font-size: 24px;
       cursor: pointer;
       border-radius: 5px;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, outline 0.2s ease;
+      min-width: 40px;
+      text-align: center;
     }
     .zoom-btn:hover {
       background: rgba(255, 111, 97, 0.9);
+    }
+    .zoom-btn:focus {
+      outline: 3px solid #ffffff;
+      outline-offset: 2px;
     }
     .visitor-counter {
       text-align: center;
@@ -473,20 +488,20 @@
       50% { opacity: 0.7; }
       100% { opacity: 1; }
     }
-    @media (min-width: 768px) {
+    @media (max-width: 1024px) {
       .product-card {
-        width: calc(20% - 15px);
-        max-width: 200px;
+        width: calc(33.33% - 10px);
+        max-width: 160px;
       }
       .product-card img {
-        width: 140px;
-        height: 140px;
+        width: 130px;
+        height: 130px;
       }
-      .product-card h4 {
-        font-size: 1em;
+      .zoom-image {
+        width: 370px;
       }
-      .product-card p {
-        font-size: 0.85em;
+      .zoom-nav {
+        width: 400px;
       }
     }
     @media (max-width: 768px) {
@@ -577,7 +592,32 @@
         text-align: center;
       }
       .zoom-image {
-        width: 300px;
+        width: 370px;
+      }
+      .zoom-nav {
+        width: 400px;
+      }
+    }
+    @media (max-width: 480px) {
+      .product-card {
+        width: calc(50% - 7.5px);
+        max-width: 120px;
+      }
+      .product-card img {
+        width: 100px;
+        height: 100px;
+      }
+      .zoom-image {
+        width: 75vw;
+        max-height: 75vh;
+      }
+      .zoom-nav {
+        width: calc(75vw + 30px); /* Ajustado para 75vw + 15px de cada lado */
+      }
+      .zoom-btn {
+        padding: 8px;
+        font-size: 20px;
+        min-width: 30px;
       }
     }
     .megaphone-message {
@@ -642,30 +682,30 @@
       </div>
     </div>
     <div class="nav-menu" role="navigation" aria-label="Menu principal">
-      <a class="nav-item" href="https://gvitagula.github.io/site/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Página Principal</a>
-      <a class="nav-item" href="https://gvitagula.github.io/quemsomos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Quem Somos</a>
+      <a class="nav-item" href="./index.html" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Página Principal</a>
+      <a class="nav-item" href="./quemsomos.html" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Quem Somos</a>
       <div class="nav-item dropdown" role="tab" aria-selected="false">
         <span class="dropdown-toggle" onclick="playClickSound(); toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">Produtos</span>
         <div class="dropdown-content">
-          <a href="https://gvitagula.github.io/paes/" class="active" onclick="playClickSound(); setActiveTab('paes')" onmouseover="playHoverSound()" role="menuitem">Pães</a>
-          <a href="https://gvitagula.github.io/biscoitos/" onclick="playClickSound(); setActiveTab('biscoitos')" onmouseover="playHoverSound()" role="menuitem">Biscoitos</a>
-          <a href="https://gvitagula.github.io/bolos/" onclick="playClickSound(); setActiveTab('bolos')" onmouseover="playHoverSound()" role="menuitem">Bolos</a>
-          <a href="https://gvitagula.github.io/outros/" onclick="playClickSound(); setActiveTab('outros')" onmouseover="playHoverSound()" role="menuitem">Outros Produtos</a>
-          <a href="https://gvitagula.github.io/precos/" onclick="playClickSound(); setActiveTab('precos')" onmouseover="playHoverSound()" role="menuitem">Preços</a>
+          <a href="./paes.html" class="active" onclick="playClickSound(); setActiveTab('paes')" onmouseover="playHoverSound()" role="menuitem">Pães</a>
+          <a href="./biscoitos.html" onclick="playClickSound(); setActiveTab('biscoitos')" onmouseover="playHoverSound()" role="menuitem">Biscoitos</a>
+          <a href="./bolos.html" onclick="playClickSound(); setActiveTab('bolos')" onmouseover="playHoverSound()" role="menuitem">Bolos</a>
+          <a href="./outros.html" onclick="playClickSound(); setActiveTab('outros')" onmouseover="playHoverSound()" role="menuitem">Outros Produtos</a>
+          <a href="./precos.html" onclick="playClickSound(); setActiveTab('precos')" onmouseover="playHoverSound()" role="menuitem">Preços</a>
         </div>
       </div>
-      <a class="nav-item" href="https://gvitagula.github.io/contatos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Contatos</a>
+      <a class="nav-item" href="./contatos.html" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Contatos</a>
       <div class="nav-item dropdown" role="tab" aria-selected="false">
         <span class="dropdown-toggle" onclick="playClickSound(); toggleDropdown(event, 'downloads')" onmouseover="playHoverSound()">Downloads</span>
         <div class="dropdown-content">
-          <a href="https://gvitagula.github.io/texto/" onclick="playClickSound(); setActiveTab('texto')" onmouseover="playHoverSound()" role="menuitem">Texto</a>
-          <a href="https://gvitagula.github.io/imagens/" onclick="playClickSound(); setActiveTab('imagens')" onmouseover="playHoverSound()" role="menuitem">Imagens</a>
-          <a href="https://gvitagula.github.io/audios/" onclick="playClickSound(); setActiveTab('audios')" onmouseover="playHoverSound()" role="menuitem">Áudios</a>
-          <a href="https://gvitagula.github.io/videos/" onclick="playClickSound(); setActiveTab('videos')" onmouseover="playHoverSound()" role="menuitem">Vídeos</a>
-          <a href="https://gvitagula.github.io/programas/" onclick="playClickSound(); setActiveTab('programas')" onmouseover="playHoverSound()" role="menuitem">Programas</a>
+          <a href="./texto.html" onclick="playClickSound(); setActiveTab('texto')" onmouseover="playHoverSound()" role="menuitem">Texto</a>
+          <a href="./imagens.html" onclick="playClickSound(); setActiveTab('imagens')" onmouseover="playHoverSound()" role="menuitem">Imagens</a>
+          <a href="./audios.html" onclick="playClickSound(); setActiveTab('audios')" onmouseover="playHoverSound()" role="menuitem">Áudios</a>
+          <a href="./videos.html" onclick="playClickSound(); setActiveTab('videos')" onmouseover="playHoverSound()" role="menuitem">Vídeos</a>
+          <a href="./programas.html" onclick="playClickSound(); setActiveTab('programas')" onmouseover="playHoverSound()" role="menuitem">Programas</a>
         </div>
       </div>
-      <a class="nav-item" href="https://gvitagula.github.io/parceiros/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Parceiros</a>
+      <a class="nav-item" href="./parceiros.html" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Parceiros</a>
     </div>
     <div class="tab-content">
       <h3>Nossos Pães</h3>
@@ -674,9 +714,9 @@
         <p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p>
         <p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p>
         <div class="product-links">
-          <a href="https://gvitagula.github.io/biscoitos/" target="_blank" rel="noopener noreferrer">Biscoitos</a>
-          <a href="https://gvitagula.github.io/bolos/" target="_blank" rel="noopener noreferrer">Bolos</a>
-          <a href="https://gvitagula.github.io/outros/" target="_blank" rel="noopener noreferrer">Outros Produtos</a>
+          <a href="./biscoitos.html" target="_blank" rel="noopener noreferrer">Biscoitos</a>
+          <a href="./bolos.html" target="_blank" rel="noopener noreferrer">Bolos</a>
+          <a href="./outros.html" target="_blank" rel="noopener noreferrer">Outros Produtos</a>
         </div>
         <button class="next-btn" id="next-btn-message" onclick="nextMessage()">Próxima Mensagem</button>
       </div>
@@ -751,12 +791,12 @@
     </div>
   </div>
 
-  <div class="zoom-overlay" id="zoom-overlay">
+  <div class="zoom-overlay" id="zoom-overlay" role="dialog" aria-label="Galeria de imagens ampliada" aria-live="polite">
     <div class="zoom-image-container">
-      <img class="zoom-image" id="zoom-image" src="" alt="Imagem ampliada">
+      <img class="zoom-image" id="zoom-image" src="" alt="Imagem ampliada" aria-hidden="false">
       <div class="zoom-nav">
-        <button class="zoom-btn previous" onclick="navigateZoom(-1)" aria-label="Imagem anterior">◄</button>
-        <button class="zoom-btn next" onclick="navigateZoom(1)" aria-label="Próxima imagem">►</button>
+        <button class="zoom-btn previous" onclick="navigateZoom('next')" onmouseover="playHoverSound()" aria-label="Próxima imagem">◄</button>
+        <button class="zoom-btn next" onclick="navigateZoom('previous')" onmouseover="playHoverSound()" aria-label="Imagem anterior">►</button>
       </div>
     </div>
   </div>
@@ -794,7 +834,12 @@
       "https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/musica3.mp3"
     ];
     let currentTrackIndex = 0;
-    let currentZoomIndex = 0;
+    let currentZoomIndex = -1;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const productCards = document.querySelectorAll('.product-card');
+    const zoomOverlay = document.getElementById('zoom-overlay');
+    const zoomImage = document.getElementById('zoom-image');
 
     function handleFirstClick() {
       if (!hasClicked) {
@@ -966,8 +1011,8 @@
 
     let messageIndex = 0;
     const messages = [
-      `<p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p><div class="product-links"><a href="https://gvitagula.github.io/biscoitos/" target="_blank" rel="noopener noreferrer">Biscoitos</a><a href="https://gvitagula.github.io/bolos/" target="_blank" rel="noopener noreferrer">Bolos</a><a href="https://gvitagula.github.io/outros/" target="_blank" rel="noopener noreferrer">Outros Produtos</a></div>`,
-      `<p>Entre em contato para fazer seu pedido ou venha nos visitar. Entregamos em toda a região e personalizamos encomendas de acordo com sua necessidade. Horário de atendimento: 08:00 - 18:00, de segunda a sábado.</p><div class="product-links"><a href="https://gvitagula.github.io/biscoitos/" target="_blank" rel="noopener noreferrer">Biscoitos</a><a href="https://gvitagula.github.io/bolos/" target="_blank" rel="noopener noreferrer">Bolos</a><a href="https://gvitagula.github.io/outros/" target="_blank" rel="noopener noreferrer">Outros Produtos</a></div>`
+      `<p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p><div class="product-links"><a href="./biscoitos.html" target="_blank" rel="noopener noreferrer">Biscoitos</a><a href="./bolos.html" target="_blank" rel="noopener noreferrer">Bolos</a><a href="./outros.html" target="_blank" rel="noopener noreferrer">Outros Produtos</a></div>`,
+      `<p>Entre em contato para fazer seu pedido ou venha nos visitar. Entregamos em toda a região e personalizamos encomendas de acordo com sua necessidade. Horário de atendimento: 08:00 - 18:00, de segunda a sábado.</p><div class="product-links"><a href="./biscoitos.html" target="_blank" rel="noopener noreferrer">Biscoitos</a><a href="./bolos.html" target="_blank" rel="noopener noreferrer">Bolos</a><a href="./outros.html" target="_blank" rel="noopener noreferrer">Outros Produtos</a></div>`
     ];
 
     function toggleExpand() {
@@ -998,38 +1043,82 @@
       playClickSound();
     }
 
-    const productCards = document.querySelectorAll('.product-card');
-
     function openZoom(index) {
       currentZoomIndex = index;
       const imageSrc = productCards[index].querySelector('img').src;
-      const zoomOverlay = document.getElementById('zoom-overlay');
-      const zoomImage = document.getElementById('zoom-image');
-      zoomImage.src = imageSrc;
+      zoomImage.src = imageSrc || 'https://via.placeholder.com/370';
       zoomOverlay.classList.add('active');
+      zoomImage.style.transform = 'translate(-50%, -50%) scale(1)';
+      zoomOverlay.setAttribute('aria-label', `Imagem ampliada ${index + 1} de ${productCards.length}: ${productCards[index].querySelector('h4').textContent}`);
       playClickSound();
     }
 
     function closeZoom() {
-      const zoomOverlay = document.getElementById('zoom-overlay');
       zoomOverlay.classList.remove('active');
+      currentZoomIndex = -1;
       playClickSound();
     }
 
     function navigateZoom(direction) {
-      currentZoomIndex = (currentZoomIndex + direction + productCards.length) % productCards.length;
-      const zoomImage = document.getElementById('zoom-image');
-      zoomImage.src = productCards[currentZoomIndex].querySelector('img').src;
-      playClickSound();
+      if (currentZoomIndex === -1) return;
+      let newIndex;
+      if (direction === 'next') {
+        newIndex = (currentZoomIndex + 1) % productCards.length;
+      } else {
+        newIndex = (currentZoomIndex - 1 + productCards.length) % productCards.length;
+      }
+      requestAnimationFrame(() => {
+        zoomImage.style.transform = direction === 'next' ? 'translate(-50%, -50%) translateX(-100%)' : 'translate(-50%, -50%) translateX(100%)';
+        const transitionDuration = parseFloat(getComputedStyle(zoomImage).transitionDuration) * 1000;
+        setTimeout(() => {
+          openZoom(newIndex);
+          const btn = direction === 'next' ? document.querySelector('.zoom-btn.next') : document.querySelector('.zoom-btn.previous');
+          btn.focus();
+        }, transitionDuration);
+      });
     }
 
     productCards.forEach((card, index) => {
       const img = card.querySelector('img');
       img.addEventListener('click', () => openZoom(index));
+      img.addEventListener('error', () => {
+        img.src = 'https://via.placeholder.com/120';
+      });
     });
 
-    document.getElementById('zoom-overlay').addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) {
+    zoomOverlay.addEventListener('click', (e) => {
+      if (e.target === zoomOverlay) {
+        closeZoom();
+      }
+    });
+
+    zoomOverlay.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    zoomOverlay.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeDistance = touchEndX - touchStartX;
+      if (swipeDistance > 50) {
+        navigateZoom('previous');
+      } else if (swipeDistance < -50) {
+        navigateZoom('next');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!zoomOverlay.classList.contains('active')) return;
+      if (e.key === 'ArrowLeft') {
+        navigateZoom('previous');
+        playClickSound();
+      } else if (e.key === 'ArrowRight') {
+        navigateZoom('next');
+        playClickSound();
+      } else if (e.key === 'Escape') {
         closeZoom();
       }
     });

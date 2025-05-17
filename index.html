@@ -393,73 +393,43 @@
       z-index: 10000;
       justify-content: center;
       align-items: center;
-      touch-action: none;
     }
     .zoom-overlay.active {
       display: flex;
     }
     .zoom-image-container {
       position: relative;
-      width: 300px;
-      height: 300px;
-      overflow: hidden;
-      z-index: 10001;
+      max-width: 90%;
+      max-height: 90%;
     }
     .zoom-image {
-      width: 300px;
-      height: 300px;
-      object-fit: cover;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.3s ease;
-      opacity: 1;
-      user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-    }
-    .zoom-image.fading {
-      opacity: 0;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
     }
     .zoom-nav {
       position: absolute;
       top: 50%;
+      width: 100%;
       transform: translateY(-50%);
-      width: 360px;
       display: flex;
       justify-content: space-between;
-      z-index: 10002;
-      pointer-events: none;
+      padding: 0 20px;
+      box-sizing: border-box;
     }
     .zoom-btn {
       background: rgba(255, 255, 255, 0.2);
       color: #fff;
       border: none;
-      padding: 5px;
-      cursor: pointer;
+      padding: 10px;
       font-size: 24px;
-      min-width: 30px;
-      min-height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      cursor: pointer;
       border-radius: 5px;
       transition: background 0.3s ease;
-      visibility: visible !important;
-      opacity: 1 !important;
-      pointer-events: auto;
-      z-index: 10002;
-      box-sizing: border-box;
     }
     .zoom-btn:hover {
       background: rgba(255, 255, 255, 0.4);
-    }
-    .zoom-btn.previous {
-      margin-left: 20px;
-    }
-    .zoom-btn.next {
-      margin-right: 20px;
     }
     .visitor-counter {
       text-align: center;
@@ -585,24 +555,6 @@
         padding: 8px 12px;
         text-align: center;
       }
-      .zoom-nav {
-        width: 340px;
-      }
-      .zoom-btn.previous {
-        margin-left: 15px;
-      }
-      .zoom-btn.next {
-        margin-right: 15px;
-      }
-      .zoom-btn {
-        min-width: 28px;
-        min-height: 28px;
-        font-size: 22px;
-      }
-      .visitor-counter {
-        max-width: 200px;
-        padding: 10px;
-      }
     }
     .megaphone-message {
       display: none;
@@ -666,63 +618,63 @@
       </div>
     </div>
     <div class="nav-menu">
-      <a class="nav-item" href="https://gvitagula.github.io/site/" role="tab" onmouseover="playHoverSound()">Página Principal</a>
-      <a class="nav-item" href="https://gvitagula.github.io/site/quemsomos" role="tab" onmouseover="playHoverSound()">Quem Somos</a>
+      <a class="nav-item" href="/" role="tab" onmouseover="playHoverSound()">Página Principal</a>
+      <a class="nav-item" href="/quem-somos/" role="tab" onmouseover="playHoverSound()">Quem Somos</a>
       <div class="nav-item dropdown active" onclick="toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">
         <span class="dropdown-toggle">Produtos</span>
         <div class="dropdown-content">
-          <a href="https://gvitagula.github.io/paes/" class="active" role="menuitem" onmouseover="playHoverSound()">Pães</a>
-          <a href="https://gvitagula.github.io/biscoitos/" role="menuitem" onmouseover="playHoverSound()">Biscoitos</a>
-          <a href="https://gvitagula.github.io/bolos/" role="menuitem" onmouseover="playHoverSound()">Bolos</a>
-          <a href="https://gvitagula.github.io/+produtos/" role="menuitem" onmouseover="playHoverSound()">+Produtos</a>
-          <a href="https://gvitagula.github.io/precos/" role="menuitem" onmouseover="playHoverSound()">Preços</a>
+          <a href="/paes/" class="active" role="menuitem" onmouseover="playHoverSound()">Pães</a>
+          <a href="/biscoitos/" role="menuitem" onmouseover="playHoverSound()">Biscoitos</a>
+          <a href="/bolos/" role="menuitem" onmouseover="playHoverSound()">Bolos</a>
+          <a href="/mais-produtos/" role="menuitem" onmouseover="playHoverSound()">+Produtos</a>
+          <a href="/precos/" role="menuitem" onmouseover="playHoverSound()">Preços</a>
         </div>
       </div>
-      <a class="nav-item" href="https://gvitagula.github.io/site/contatos" role="tab" onmouseover="playHoverSound()">Contatos</a>
-      <a class="nav-item" href="https://gvitagula.github.io/site/parceiros" role="tab" onmouseover="playHoverSound()">Parceiros</a>
+      <a class="nav-item" href="/contatos/" role="tab" onmouseover="playHoverSound()">Contatos</a>
+      <a class="nav-item" href="/parceiros/" role="tab" onmouseover="playHoverSound()">Parceiros</a>
       <div class="nav-item dropdown" onclick="toggleDropdown(event, 'downloads')" onmouseover="playHoverSound()">
         <span class="dropdown-toggle">Downloads</span>
         <div class="dropdown-content">
           <div class="submenu-item">
-            <a href="https://gvitagula.github.io/programas/" role="menuitem" onmouseover="playHoverSound()">Programas</a>
+            <a href="/downloads/programas/" role="menuitem" onmouseover="playHoverSound()">Programas</a>
             <div class="submenu">
-              <a href="https://gvitagula.github.io/programas/desktop/" role="menuitem" onmouseover="playHoverSound()">Desktop</a>
-              <a href="https://gvitagula.github.io/programas/mobile/" role="menuitem" onmouseover="playHoverSound()">Mobile</a>
+              <a href="/downloads/programas/desktop/" role="menuitem" onmouseover="playHoverSound()">Desktop</a>
+              <a href="/downloads/programas/mobile/" role="menuitem" onmouseover="playHoverSound()">Mobile</a>
             </div>
           </div>
           <div class="submenu-item">
-            <a href="https://gvitagula.github.io/imagens/" role="menuitem" onmouseover="playHoverSound()">Imagens</a>
+            <a href="/downloads/imagens/" role="menuitem" onmouseover="playHoverSound()">Imagens</a>
             <div class="submenu">
-              <a href="https://gvitagula.github.io/imagens/paes/" role="menuitem" onmouseover="playHoverSound()">Pães</a>
-              <a href="https://gvitagula.github.io/imagens/produtos/" role="menuitem" onmouseover="playHoverSound()">Outros Produtos</a>
+              <a href="/downloads/imagens/paes/" role="menuitem" onmouseover="playHoverSound()">Pães</a>
+              <a href="/downloads/imagens/outros-produtos/" role="menuitem" onmouseover="playHoverSound()">Outros Produtos</a>
             </div>
           </div>
           <div class="submenu-item">
-            <a href="https://gvitagula.github.io/video/" role="menuitem" onmouseover="playHoverSound()">Vídeo</a>
+            <a href="/downloads/videos/" role="menuitem" onmouseover="playHoverSound()">Vídeo</a>
             <div class="submenu">
-              <a href="https://gvitagula.github.io/video/receitas/" role="menuitem" onmouseover="playHoverSound()">Receitas</a>
-              <a href="https://gvitagula.github.io/video/tutoriais/" role="menuitem" onmouseover="playHoverSound()">Tutoriais</a>
+              <a href="/downloads/videos/receitas/" role="menuitem" onmouseover="playHoverSound()">Receitas</a>
+              <a href="/downloads/videos/tutoriais/" role="menuitem" onmouseover="playHoverSound()">Tutoriais</a>
             </div>
           </div>
           <div class="submenu-item">
-            <a href="https://gvitagula.github.io/mp3/" role="menuitem" onmouseover="playHoverSound()">Mp3</a>
+            <a href="/downloads/mp3/" role="menuitem" onmouseover="playHoverSound()">Mp3</a>
             <div class="submenu">
-              <a href="https://gvitagula.github.io/mp3/musicas/" role="menuitem" onmouseover="playHoverSound()">Músicas</a>
-              <a href="https://gvitagula.github.io/mp3/efeitos/" role="menuitem" onmouseover="playHoverSound()">Efeitos</a>
+              <a href="/downloads/mp3/musicas/" role="menuitem" onmouseover="playHoverSound()">Músicas</a>
+              <a href="/downloads/mp3/efeitos/" role="menuitem" onmouseover="playHoverSound()">Efeitos</a>
             </div>
           </div>
           <div class="submenu-item">
-            <a href="https://gvitagula.github.io/pdf/" role="menuitem" onmouseover="playHoverSound()">PDF</a>
+            <a href="/downloads/pdf/" role="menuitem" onmouseover="playHoverSound()">PDF</a>
             <div class="submenu">
-              <a href="https://gvitagula.github.io/pdf/catalogos/" role="menuitem" onmouseover="playHoverSound()">Catálogos</a>
-              <a href="https://gvitagula.github.io/pdf/manuais/" role="menuitem" onmouseover="playHoverSound()">Manuais</a>
+              <a href="/downloads/pdf/catalogos/" role="menuitem" onmouseover="playHoverSound()">Catálogos</a>
+              <a href="/downloads/pdf/manuais/" role="menuitem" onmouseover="playHoverSound()">Manuais</a>
             </div>
           </div>
           <div class="submenu-item">
-            <a href="https://gvitagula.github.io/outros/" role="menuitem" onmouseover="playHoverSound()">Outros</a>
+            <a href="/downloads/outros/" role="menuitem" onmouseover="playHoverSound()">Outros</a>
             <div class="submenu">
-              <a href="https://gvitagula.github.io/outros/documentos/" role="menuitem" onmouseover="playHoverSound()">Documentos</a>
-              <a href="https://gvitagula.github.io/outros/outros/" role="menuitem" onmouseover="playHoverSound()">Outros Arquivos</a>
+              <a href="/downloads/outros/documentos/" role="menuitem" onmouseover="playHoverSound()">Documentos</a>
+              <a href="/downloads/outros/arquivos/" role="menuitem" onmouseover="playHoverSound()">Outros Arquivos</a>
             </div>
           </div>
         </div>
@@ -732,72 +684,73 @@
       <h3>Nossos Pães</h3>
       <button class="expand-btn" onclick="toggleExpand()">Exibir</button>
       <div class="expanded-message" id="expanded-message">
-        <p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p>
+        <p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p>
+        <p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p>
         <button class="next-btn" id="next-btn-message" onclick="nextMessage()">Próxima Mensagem</button>
       </div>
       <div class="product-gallery">
         <div class="product-card" data-index="0">
-          <img src="https://i.ibb.co/4Z458fsg/01-Humburguer.jpg" alt="Pão de Hambúrguer" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer image');">
+          <img src="https://i.ibb.co/4Z458fsg/01-Humburguer.jpg" alt="Pão de Hambúrguer">
           <h4>Pão de Hambúrguer</h4>
           <p>Macio, levemente adocicado e ideal para o seu hambúrguer caseiro.</p>
         </div>
         <div class="product-card" data-index="1">
-          <img src="https://i.ibb.co/fz9tnc87/02-Hotdog.jpg" alt="Pão de Hot Dog" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hot Dog image');">
+          <img src="https://i.ibb.co/fz9tnc87/02-Hotdog.jpg" alt="Pão de Hot Dog">
           <h4>Pão de Hot Dog</h4>
           <p>Perfeito para um lanche rápido, com textura fofa e sabor único.</p>
         </div>
         <div class="product-card" data-index="2">
-          <img src="https://i.ibb.co/4R82Qrhr/03-Forma.jpg" alt="Pão de Forma" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma image');">
+          <img src="https://i.ibb.co/4R82Qrhr/03-Forma.jpg" alt="Pão de Forma">
           <h4>Pão de Forma</h4>
           <p>Versátil e macio, ideal para sanduíches e torradas.</p>
         </div>
         <div class="product-card" data-index="3">
-          <img src="https://i.ibb.co/JRNjcqf9/04-Leite.jpg" alt="Pão de Leite" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Leite image');">
+          <img src="https://i.ibb.co/JRNjcqf9/04-Leite.jpg" alt="Pão de Leite">
           <h4>Pão de Leite</h4>
           <p>Sabor suave, macio e perfeito para acompanhar café.</p>
         </div>
         <div class="product-card" data-index="4">
-          <img src="https://i.ibb.co/8g2y0rGL/05-Forma-integral.jpg" alt="Pão de Forma Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Integral image');">
+          <img src="https://i.ibb.co/8g2y0rGL/05-Forma-integral.jpg" alt="Pão de Forma Integral">
           <h4>Pão de Forma Integral</h4>
           <p>Saudável e nutritivo, rico em fibras naturais.</p>
         </div>
         <div class="product-card" data-index="5">
-          <img src="https://i.ibb.co/TDN8ZRv0/06-Hamburgao.jpg" alt="Pão de Hambúrgão" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrgão image');">
+          <img src="https://i.ibb.co/TDN8ZRv0/06-Hamburgao.jpg" alt="Pão de Hambúrgão">
           <h4>Pão de Hambúrgão</h4>
           <p>Robustez e sabor, ideal para hambúrgueres grandes.</p>
         </div>
         <div class="product-card" data-index="6">
-          <img src="https://i.ibb.co/p6TFCym6/07-Pic-Nic.jpg" alt="Pão de Pic Nic" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic image');">
+          <img src="https://i.ibb.co/p6TFCym6/07-Pic-Nic.jpg" alt="Pão de Pic Nic">
           <h4>Pão de Pic Nic</h4>
           <p>Leve e crocante, perfeito para lanches ao ar livre.</p>
         </div>
         <div class="product-card" data-index="7">
-          <img src="https://i.ibb.co/Wpz5X2mr/08-Pic-Nic-Integral.jpg" alt="Pão de Pic Nic Integral" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Pic Nic Integral image');">
+          <img src="https://i.ibb.co/Wpz5X2mr/08-Pic-Nic-Integral.jpg" alt="Pão de Pic Nic Integral">
           <h4>Pão de Pic Nic Integral</h4>
           <p>Opção saudável com sabor rústico.</p>
         </div>
         <div class="product-card" data-index="8">
-          <img src="https://i.ibb.co/yFZp0Nd2/10-Mini-Hamburguer-Brioche.jpg" alt="Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Hambúrguer Brioche image');">
+          <img src="https://i.ibb.co/yFZp0Nd2/10-Mini-Hamburguer-Brioche.jpg" alt="Pão de Hambúrguer Brioche">
           <h4>Pão de Hambúrguer Brioche</h4>
           <p>Doce e macio, eleva qualquer hambúrguer.</p>
         </div>
         <div class="product-card" data-index="9">
-          <img src="https://i.ibb.co/mrv9Dj60/09-Hamburguer-Brioche.jpg" alt="Mini Pão de Hambúrguer Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Mini Pão de Hambúrguer Brioche image');">
+          <img src="https://i.ibb.co/mrv9Dj60/09-Hamburguer-Brioche.jpg" alt="Mini Pão de Hambúrguer Brioche">
           <h4>Mini Pão de Hambúrguer Brioche</h4>
           <p>Pequeno, mas cheio de sabor e sofisticação.</p>
         </div>
         <div class="product-card" data-index="10">
-          <img src="https://i.ibb.co/Qv97G6Kb/11-Briochinho.jpg" alt="Briochinho" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Briochinho image');">
+          <img src="https://i.ibb.co/Qv97G6Kb/11-Briochinho.jpg" alt="Briochinho">
           <h4>Briochinho</h4>
           <p>Pequeno e delicado, ideal para petiscos.</p>
         </div>
         <div class="product-card" data-index="11">
-          <img src="https://i.ibb.co/Lzd7dDdM/12-Forma-Brioche.jpg" alt="Pão de Forma Brioche" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão de Forma Brioche image');">
+          <img src="https://i.ibb.co/Lzd7dDdM/12-Forma-Brioche.jpg" alt="Pão de Forma Brioche">
           <h4>Pão de Forma Brioche</h4>
           <p>Amanteigado e macio, perfeito para sanduíches.</p>
         </div>
         <div class="product-card" data-index="12">
-          <img src="https://i.ibb.co/PzwjD7rv/14-Pao-Arabe.jpg" alt="Pão Árabe" onerror="this.onerror=null; this.src='https://via.placeholder.com/120?text=Imagem+Indisponível'; console.error('Failed to load Pão Árabe image');">
+          <img src="https://i.ibb.co/PzwjD7rv/14-Pao-Arabe.jpg" alt="Pão Árabe">
           <h4>Pão Árabe</h4>
           <p>Saboroso e fofinho, ideal para pratos típicos.</p>
         </div>
@@ -806,6 +759,7 @@
     </div>
   </div>
 
+  <!-- Overlay para zoom -->
   <div class="zoom-overlay" id="zoom-overlay">
     <div class="zoom-image-container">
       <img class="zoom-image" id="zoom-image" src="" alt="Imagem ampliada">
@@ -851,7 +805,6 @@
     ];
     let currentTrackIndex = 0;
     let currentZoomIndex = 0;
-    let touchStartX = 0;
 
     // Manipulação do primeiro clique para iniciar áudio
     function handleFirstClick() {
@@ -992,21 +945,6 @@
     audio.src = tracks[currentTrackIndex];
     audio.load();
 
-    audio.addEventListener('error', (e) => {
-      console.error("Audio load error:", e);
-      currentTrackIndex = 0;
-      audio.src = tracks[0];
-      audio.load();
-    });
-
-    audio.addEventListener('loadeddata', () => {
-      console.log("Audio loaded successfully: " + tracks[currentTrackIndex]);
-    });
-
-    audio.addEventListener('canplaythrough', () => {
-      console.log("Audio can play through: " + tracks[currentTrackIndex]);
-    });
-
     // Controle do menu dropdown
     function toggleDropdown(event, tabName) {
       event.preventDefault();
@@ -1061,58 +999,35 @@
       playClickSound();
     }
 
-    // Controle da galeria de imagens
+    // Controle da galeria de imagens com zoom
+    const productCards = document.querySelectorAll('.product-card');
+
     function openZoom(index) {
-      console.log("Opening zoom for index:", index);
-      const cards = document.querySelectorAll('.product-card');
-      if (index < 0 || index >= cards.length) {
-        console.error("Invalid index:", index);
-        return;
-      }
       currentZoomIndex = index;
-      const imageSrc = cards[index].querySelector('img').src;
+      const imageSrc = productCards[index].querySelector('img').src;
       const zoomOverlay = document.getElementById('zoom-overlay');
       const zoomImage = document.getElementById('zoom-image');
       zoomImage.src = imageSrc;
       zoomOverlay.classList.add('active');
-      const prevBtn = document.querySelector('.zoom-btn.previous');
-      const nextBtn = document.querySelector('.zoom-btn.next');
-      console.log("Previous button visibility:", prevBtn.style.visibility, prevBtn.style.display);
-      console.log("Next button visibility:", nextBtn.style.visibility, nextBtn.style.display);
       playClickSound();
     }
 
     function closeZoom() {
-      console.log("Closing zoom");
       const zoomOverlay = document.getElementById('zoom-overlay');
       zoomOverlay.classList.remove('active');
       playClickSound();
     }
 
     function navigateZoom(direction) {
-      console.log("Navigating zoom, direction:", direction);
-      const cards = document.querySelectorAll('.product-card');
-      const newIndex = (currentZoomIndex + direction + cards.length) % cards.length;
+      currentZoomIndex = (currentZoomIndex + direction + productCards.length) % productCards.length;
       const zoomImage = document.getElementById('zoom-image');
-      zoomImage.classList.add('fading');
-      setTimeout(() => {
-        zoomImage.src = cards[newIndex].querySelector('img').src;
-        zoomImage.classList.remove('fading');
-        currentZoomIndex = newIndex;
-        console.log("Navigated to index:", newIndex);
-      }, 300);
+      zoomImage.src = productCards[currentZoomIndex].querySelector('img').src;
       playClickSound();
     }
 
-    // Configuração dos eventos da galeria
-    const productCards = document.querySelectorAll('.product-card');
     productCards.forEach((card, index) => {
       const img = card.querySelector('img');
       img.addEventListener('click', () => openZoom(index));
-      img.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        openZoom(index);
-      }, { passive: false });
     });
 
     document.getElementById('zoom-overlay').addEventListener('click', (e) => {
@@ -1120,22 +1035,6 @@
         closeZoom();
       }
     });
-
-    const zoomImage = document.getElementById('zoom-image');
-    zoomImage.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      touchStartX = e.touches[0].clientX;
-      console.log("Touch start, X:", touchStartX);
-    }, { passive: false });
-
-    zoomImage.addEventListener('touchend', (e) => {
-      const touchEndX = e.changedTouches[0].clientX;
-      const deltaX = touchEndX - touchStartX;
-      console.log("Touch end, X:", touchEndX, "Delta:", deltaX);
-      if (Math.abs(deltaX) > 50) {
-        navigateZoom(deltaX > 0 ? -1 : 1);
-      }
-    }, { passive: false });
 
     // Controle da mensagem de oferta
     function activateMegaphone() {

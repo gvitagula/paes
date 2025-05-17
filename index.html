@@ -637,68 +637,31 @@
         </span>
       </div>
     </div>
-    <div class="nav-menu">
-      <a class="nav-item" href="/site/" role="tab" onmouseover="playHoverSound()">Página Principal</a>
-      <a class="nav-item" href="/quem-somos/" role="tab" onmouseover="playHoverSound()">Quem Somos</a>
-      <div class="nav-item dropdown active" onclick="toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">
-        <span class="dropdown-toggle">Produtos</span>
+    <div class="nav-menu" role="navigation" aria-label="Menu principal">
+      <a class="nav-item" href="https://gvitagula.github.io/site/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Página Principal</a>
+      <a class="nav-item" href="https://gvitagula.github.io/quemsomos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Quem Somos</a>
+      <div class="nav-item dropdown" role="tab" aria-selected="false">
+        <span class="dropdown-toggle" onclick="playClickSound(); toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">Produtos</span>
         <div class="dropdown-content">
-          <a href="/paes/" class="active" role="menuitem" onmouseover="playHoverSound()">Pães</a>
-          <a href="/biscoitos/" role="menuitem" onmouseover="playHoverSound()">Biscoitos</a>
-          <a href="/bolos/" role="menuitem" onmouseover="playHoverSound()">Bolos</a>
-          <a href="/mais-produtos/" role="menuitem" onmouseover="playHoverSound()">+Produtos</a>
-          <a href="/precos/" role="menuitem" onmouseover="playHoverSound()">Preços</a>
+          <a href="https://gvitagula.github.io/paes/" class="active" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Pães</a>
+          <a href="https://gvitagula.github.io/biscoitos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Biscoitos</a>
+          <a href="https://gvitagula.github.io/bolos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Bolos</a>
+          <a href="https://gvitagula.github.io/outros/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Outros Produtos</a>
+          <a href="https://gvitagula.github.io/precos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Preços</a>
         </div>
       </div>
-      <a class="nav-item" href="/contatos/" role="tab" onmouseover="playHoverSound()">Contatos</a>
-      <a class="nav-item" href="/parceiros/" role="tab" onmouseover="playHoverSound()">Parceiros</a>
-      <div class="nav-item dropdown" onclick="toggleDropdown(event, 'downloads')" onmouseover="playHoverSound()">
-        <span class="dropdown-toggle">Downloads</span>
+      <a class="nav-item" href="https://gvitagula.github.io/contatos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Contatos</a>
+      <div class="nav-item dropdown" role="tab" aria-selected="false">
+        <span class="dropdown-toggle" onclick="playClickSound(); toggleDropdown(event, 'downloads')" onmouseover="playHoverSound()">Downloads</span>
         <div class="dropdown-content">
-          <div class="submenu-item">
-            <a href="/downloads/programas/" role="menuitem" onmouseover="playHoverSound()">Programas</a>
-            <div class="submenu">
-              <a href="/downloads/programas/desktop/" role="menuitem" onmouseover="playHoverSound()">Desktop</a>
-              <a href="/downloads/programas/mobile/" role="menuitem" onmouseover="playHoverSound()">Mobile</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="/downloads/imagens/" role="menuitem" onmouseover="playHoverSound()">Imagens</a>
-            <div class="submenu">
-              <a href="/downloads/imagens/paes/" role="menuitem" onmouseover="playHoverSound()">Pães</a>
-              <a href="/downloads/imagens/outros-produtos/" role="menuitem" onmouseover="playHoverSound()">Outros Produtos</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="/downloads/videos/" role="menuitem" onmouseover="playHoverSound()">Vídeo</a>
-            <div class="submenu">
-              <a href="/downloads/videos/receitas/" role="menuitem" onmouseover="playHoverSound()">Receitas</a>
-              <a href="/downloads/videos/tutoriais/" role="menuitem" onmouseover="playHoverSound()">Tutoriais</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="/downloads/mp3/" role="menuitem" onmouseover="playHoverSound()">Mp3</a>
-            <div class="submenu">
-              <a href="/downloads/mp3/musicas/" role="menuitem" onmouseover="playHoverSound()">Músicas</a>
-              <a href="/downloads/mp3/efeitos/" role="menuitem" onmouseover="playHoverSound()">Efeitos</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="/downloads/pdf/" role="menuitem" onmouseover="playHoverSound()">PDF</a>
-            <div class="submenu">
-              <a href="/downloads/pdf/catalogos/" role="menuitem" onmouseover="playHoverSound()">Catálogos</a>
-              <a href="/downloads/pdf/manuais/" role="menuitem" onmouseover="playHoverSound()">Manuais</a>
-            </div>
-          </div>
-          <div class="submenu-item">
-            <a href="/downloads/outros/" role="menuitem" onmouseover="playHoverSound()">Outros</a>
-            <div class="submenu">
-              <a href="/downloads/outros/documentos/" role="menuitem" onmouseover="playHoverSound()">Documentos</a>
-              <a href="/downloads/outros/arquivos/" role="menuitem" onmouseover="playHoverSound()">Outros Arquivos</a>
-            </div>
-          </div>
+          <a href="https://gvitagula.github.io/texto/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Texto</a>
+          <a href="https://gvitagula.github.io/imagens/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Imagens</a>
+          <a href="https://gvitagula.github.io/audios/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Áudios</a>
+          <a href="https://gvitagula.github.io/videos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Vídeos</a>
+          <a href="https://gvitagula.github.io/programas/" onclick="playClickSound()" onmouseover="playHoverSound()" role="menuitem">Programas</a>
         </div>
       </div>
+      <a class="nav-item" href="https://gvitagula.github.io/parceiros/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Parceiros</a>
     </div>
     <div class="tab-content">
       <h3>Nossos Pães</h3>
@@ -709,7 +672,7 @@
         <div class="product-links">
           <a href="/biscoitos/" target="_blank">Biscoitos</a>
           <a href="/bolos/" target="_blank">Bolos</a>
-          <a href="/mais-produtos/" target="_blank">+Produtos</a>
+          <a href="/outros/" target="_blank">Outros Produtos</a>
         </div>
         <button class="next-btn" id="next-btn-message" onclick="nextMessage()">Próxima Mensagem</button>
       </div>
@@ -870,11 +833,11 @@
         volumeIcon.classList.add('low');
         lowIcon.style.display = 'block';
         newVolume = 0.3;
-      } else if (volumeLevel === 1) {
+      } else if (volumeLevel == 1) {
         volumeIcon.classList.add('medium');
         mediumIcon.style.display = 'block';
         newVolume = 0.6;
-      } else if (volumeLevel === 2) {
+      } else if (volumeLevel == 2) {
         volumeIcon.classList.add('high');
         highIcon.style.display = 'block';
         newVolume = 1.0;
@@ -995,8 +958,8 @@
     // Controle da mensagem expansível
     let messageIndex = 0;
     const messages = [
-      `<p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p><div class="product-links"><a href="/biscoitos/" target="_blank">Biscoitos</a><a href="/bolos/" target="_blank">Bolos</a><a href="/mais-produtos/" target="_blank">+Produtos</a></div>`,
-      `<p>Entre em contato para fazer seu pedido ou venha nos visitar. Entregamos em toda a região e personalizamos encomendas de acordo com sua necessidade. Horário de atendimento: 08:00 - 18:00, de segunda a sábado.</p><div class="product-links"><a href="/biscoitos/" target="_blank">Biscoitos</a><a href="/bolos/" target="_blank">Bolos</a><a href="/mais-produtos/" target="_blank">+Produtos</a></div>`
+      `<p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p><div class="product-links"><a href="/biscoitos/" target="_blank">Biscoitos</a><a href="/bolos/" target="_blank">Bolos</a><a href="/outros/" target="_blank">Outros Produtos</a></div>`,
+      `<p>Entre em contato para fazer seu pedido ou venha nos visitar. Entregamos em toda a região e personalizamos encomendas de acordo com sua necessidade. Horário de atendimento: 08:00 - 18:00, de segunda a sábado.</p><div class="product-links"><a href="/biscoitos/" target="_blank">Biscoitos</a><a href="/bolos/" target="_blank">Bolos</a><a href="/outros/" target="_blank">Outros Produtos</a></div>`
     ];
 
     function toggleExpand() {

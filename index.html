@@ -638,7 +638,7 @@
       </div>
     </div>
     <div class="nav-menu">
-      <a class="nav-item" href="/" role="tab" onmouseover="playHoverSound()">Página Principal</a>
+      <a class="nav-item" href="/site/" role="tab" onmouseover="playHoverSound()">Página Principal</a>
       <a class="nav-item" href="/quem-somos/" role="tab" onmouseover="playHoverSound()">Quem Somos</a>
       <div class="nav-item dropdown active" onclick="toggleDropdown(event, 'produtos')" onmouseover="playHoverSound()">
         <span class="dropdown-toggle">Produtos</span>
@@ -707,9 +707,9 @@
         <p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p>
         <p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p>
         <div class="product-links">
-          <a href="/biscoitos/">Biscoitos</a>
-          <a href="/bolos/">Bolos</a>
-          <a href="/mais-produtos/">+Produtos</a>
+          <a href="/biscoitos/" target="_blank">Biscoitos</a>
+          <a href="/bolos/" target="_blank">Bolos</a>
+          <a href="/mais-produtos/" target="_blank">+Produtos</a>
         </div>
         <button class="next-btn" id="next-btn-message" onclick="nextMessage()">Próxima Mensagem</button>
       </div>
@@ -995,8 +995,8 @@
     // Controle da mensagem expansível
     let messageIndex = 0;
     const messages = [
-      `<p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p><div class="product-links"><a href="/biscoitos/">Biscoitos</a><a href="/bolos/">Bolos</a><a href="/mais-produtos/">+Produtos</a></div>`,
-      `<p>Entre em contato para fazer seu pedido ou venha nos visitar. Entregamos em toda a região e personalizamos encomendas de acordo com sua necessidade. Horário de atendimento: 08:00 - 18:00, de segunda a sábado.</p><div class="product-links"><a href="/biscoitos/">Biscoitos</a><a href="/bolos/">Bolos</a><a href="/mais-produtos/">+Produtos</a></div>`
+      `<p>Na Fábrica Vita Gula, cuidamos de cada etapa da panificação para garantir pães artesanais de alta qualidade. Utilizamos farinhas selecionadas, fermentação natural e ingredientes frescos para proporcionar sabor e textura únicos. Também oferecemos opções sem glúten e veganas sob encomenda.</p><p>Combinamos receitas tradicionais e técnicas modernas para criar pães assados diariamente com carinho. Cada fornada é feita com atenção aos detalhes, levando até você o melhor da panificação artesanal.</p><div class="product-links"><a href="/biscoitos/" target="_blank">Biscoitos</a><a href="/bolos/" target="_blank">Bolos</a><a href="/mais-produtos/" target="_blank">+Produtos</a></div>`,
+      `<p>Entre em contato para fazer seu pedido ou venha nos visitar. Entregamos em toda a região e personalizamos encomendas de acordo com sua necessidade. Horário de atendimento: 08:00 - 18:00, de segunda a sábado.</p><div class="product-links"><a href="/biscoitos/" target="_blank">Biscoitos</a><a href="/bolos/" target="_blank">Bolos</a><a href="/mais-produtos/" target="_blank">+Produtos</a></div>`
     ];
 
     function toggleExpand() {

@@ -445,7 +445,7 @@
       left: 50%;
       display: flex;
       justify-content: space-between;
-      box-sizing: border-box;
+      align-items: center;
       z-index: 10011;
     }
     .zoom-btn {
@@ -459,6 +459,10 @@
       transition: background 0.3s ease, outline 0.2s ease;
       min-width: 40px;
       text-align: center;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .zoom-btn:hover {
       background: rgba(255, 111, 97, 0.9);
@@ -618,6 +622,7 @@
         padding: 8px;
         font-size: 20px;
         min-width: 30px;
+        height: 30px;
       }
     }
     .megaphone-message {
@@ -795,8 +800,8 @@
     <div class="zoom-image-container">
       <img class="zoom-image" id="zoom-image" src="" alt="Imagem ampliada" aria-hidden="false">
       <div class="zoom-nav">
-        <button class="zoom-btn previous" onclick="navigateZoom('next')" onmouseover="playHoverSound()" aria-label="Próxima imagem">◄</button>
-        <button class="zoom-btn next" onclick="navigateZoom('previous')" onmouseover="playHoverSound()" aria-label="Imagem anterior">►</button>
+        <button class="zoom-btn previous" onclick="navigateZoom('previous')" onmouseover="playHoverSound()" aria-label="Imagem anterior">◄</button>
+        <button class="zoom-btn next" onclick="navigateZoom('next')" onmouseover="playHoverSound()" aria-label="Próxima imagem">►</button>
       </div>
     </div>
   </div>
@@ -835,8 +840,6 @@
     ];
     let currentTrackIndex = 0;
     let currentZoomIndex = -1;
-    let touchStartX = 0;
-    let touchEndX = 0;
     const productCards = document.querySelectorAll('.product-card');
     const zoomOverlay = document.getElementById('zoom-overlay');
     const zoomImage = document.getElementById('zoom-image');
@@ -1061,20 +1064,13 @@
 
     function navigateZoom(direction) {
       if (currentZoomIndex === -1) return;
-      let newIndex;
-      if (direction === 'next') {
-        newIndex = (currentZoomIndex + 1) % productCards.length;
-      } else {
-        newIndex = (currentZoomIndex - 1 + productCards.length) % productCards.length;
-      }
+      let newIndex = (currentZoomIndex + (direction === 'next' ? 1 : -1) + productCards.length) % productCards.length;
       requestAnimationFrame(() => {
-        zoomImage.style.transform = direction === 'next' ? 'translate(-50%, -50%) translateX(-100%)' : 'translate(-50%, -50%) translateX(100%)';
-        const transitionDuration = parseFloat(getComputedStyle(zoomImage).transitionDuration) * 1000;
+        zoomImage.style.transform = direction === 'next' ? 'translate(-50%, -50%) translateX(100%)' : 'translate(-50%, -50%) translateX(-100%)';
         setTimeout(() => {
           openZoom(newIndex);
-          const btn = direction === 'next' ? document.querySelector('.zoom-btn.next') : document.querySelector('.zoom-btn.previous');
-          btn.focus();
-        }, transitionDuration);
+          zoomImage.style.transform = 'translate(-50%, -50%) scale(1)'; // Reset para evitar acumulação
+        }, 300); // Sincronizado com a transição de 0.3s
       });
     }
 
@@ -1087,38 +1083,7 @@
     });
 
     zoomOverlay.addEventListener('click', (e) => {
-      if (e.target !== zoomImage && e.target === zoomOverlay) {
-        closeZoom();
-      }
-    });
-
-    zoomOverlay.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-
-    zoomOverlay.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].clientX;
-      handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-      const swipeDistance = touchEndX - touchStartX;
-      if (swipeDistance > 50) {
-        navigateZoom('previous');
-      } else if (swipeDistance < -50) {
-        navigateZoom('next');
-      }
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (!zoomOverlay.classList.contains('active')) return;
-      if (e.key === 'ArrowLeft') {
-        navigateZoom('previous');
-        playClickSound();
-      } else if (e.key === 'ArrowRight') {
-        navigateZoom('next');
-        playClickSound();
-      } else if (e.key === 'Escape') {
+      if (e.target !== zoomImage && !e.target.closest('.zoom-nav')) {
         closeZoom();
       }
     });

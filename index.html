@@ -37,13 +37,60 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
+        </script><!-- Início do Script de Manipulação de Arquivos XLSX -->
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+</script>
+<!-- Fim do Script de Manipulação de Arquivos XLSX -->
+
+<!-- Início da Estrutura HTML e Metadados -->
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fábrica Vita Gula - Pães</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@400&display=swap" rel="stylesheet">
+<!-- Fim da Estrutura HTML e Metadados -->
+
+<!-- Início do Estilo CSS -->
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -69,12 +116,12 @@
       flex-direction: column;
       min-height: 100vh;
       box-sizing: border-box;
-      padding-top: 150px;
+      padding-top: 140px;
     }
     .header {
-      background-color: #1e90ff;
+      background: linear-gradient(135deg, #1e90ff 0%, #00cc99 100%);
       color: #ffffff;
-      padding: 20px;
+      padding: 20px 40px;
       border-bottom: 5px solid #ff6f61;
       position: fixed;
       top: 0;
@@ -82,102 +129,120 @@
       max-width: 1200px;
       box-sizing: border-box;
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
       align-items: center;
       height: 100px;
       z-index: 1001;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
     .title-container {
-      margin-left: 10px;
-      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 10px;
+      max-width: 75%;
     }
     .header h1 {
-      margin: 0 0 5px 0;
-      font-size: 2em;
+      margin: 0;
+      font-size: 1.8em;
       font-weight: 600;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .header p {
-      margin: 0;
-      font-size: 1em;
+      margin: 2px 0 0;
+      font-size: 0.9em;
       font-weight: 400;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .audio-controls {
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #1e90ff;
-      padding: 5px 8px;
-      border-radius: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 4px;
+      border-radius: 6px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      width: 120px;
-      margin-right: 10px;
+      margin-right: 8px;
     }
     .control-buttons {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      width: 100%;
-      margin-bottom: 6px;
+      gap: 2px;
     }
     .control-buttons .control-btn {
       cursor: pointer;
       color: #ffffff;
-      font-size: 1em;
-      margin: 0 6px;
+      font-size: 0.7em;
       transition: transform 0.1s ease;
+      min-width: 26px;
+      min-height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
     }
     .control-buttons .control-btn:hover {
-      transform: scale(1.2);
+      transform: scale(1.1);
     }
     .control-buttons .play-pause-btn {
-      width: 25px;
-      height: 25px;
+      width: 18px;
+      height: 18px;
       background-color: #ffffff;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #1e90ff;
-      font-size: 1em;
+      font-size: 0.7em;
+    }
+    .track-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
     .volume-icon {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
       cursor: pointer;
       color: #ffffff;
       background-color: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       transition: transform 0.2s ease, background-color 0.2s ease;
-      margin-top: 8px;
+      touch-action: manipulation;
     }
     .volume-icon:hover {
       transform: scale(1.15);
       background-color: rgba(255, 255, 255, 0.3);
     }
     .volume-icon svg {
-      width: 18px;
-      height: 18px;
+      width: 10px;
+      height: 10px;
       fill: #ffffff;
     }
     .waveform {
-      width: 100%;
-      height: 12px;
+      width: 32px;
+      height: 6px;
       background-color: #ffffff;
-      border-radius: 5px;
+      border-radius: 4px;
       position: relative;
       overflow: hidden;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 4px;
+      padding: 0 2px;
     }
     .waveform .bar {
-      width: 2px;
+      width: 0.6px;
       height: 100%;
       background-color: #1e90ff;
       border-radius: 2px;
@@ -514,58 +579,50 @@
         margin: 0;
         border-radius: 0;
         min-height: 100vh;
-        padding-top: 130px;
+        padding-top: 140px;
       }
       .header {
-        padding: 10px;
-        height: 80px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+        height: 90px;
+        padding: 15px 25px;
       }
       .title-container {
-        margin-left: 10px;
-        text-align: left;
-        flex: 1;
+        padding-left: 8px;
+        max-width: 70%;
       }
       .header h1 {
-        font-size: 1.5em;
+        font-size: 1.6em;
       }
       .header p {
-        font-size: 0.7em;
+        font-size: 0.8em;
       }
       .audio-controls {
-        width: 80px;
-        padding: 4px 6px;
-        margin-right: 10px;
-      }
-      .control-buttons {
-        margin-bottom: 4px;
+        padding: 3px;
+        margin-right: 6px;
       }
       .control-buttons .control-btn {
-        font-size: 0.8em;
-        margin: 0 3px;
+        font-size: 0.6em;
+        min-width: 24px;
+        min-height: 24px;
       }
       .control-buttons .play-pause-btn {
-        width: 18px;
-        height: 18px;
-        font-size: 0.8em;
+        width: 16px;
+        height: 16px;
+        font-size: 0.6em;
       }
       .volume-icon {
-        width: 18px;
-        height: 18px;
-        margin-top: 4px;
+        width: 16px;
+        height: 16px;
       }
       .volume-icon svg {
-        width: 14px;
-        height: 14px;
+        width: 8px;
+        height: 8px;
       }
       .waveform {
-        height: 8px;
-        padding: 0 3px;
+        width: 28px;
+        height: 5px;
       }
-      .waveform .bar {
-        width: 1px;
+      .track-controls {
+        gap: 3px;
       }
       .nav-menu {
         flex-direction: row;
@@ -573,7 +630,7 @@
         justify-content: center;
         padding: 8px;
         gap: 6px;
-        top: 80px;
+        top: 90px;
       }
       .nav-item {
         padding: 6px 10px;
@@ -646,46 +703,55 @@
       to { opacity: 1; }
     }
   </style>
+<!-- Fim do Estilo CSS -->
+
 </head>
 <body onclick="handleFirstClick()">
+<!-- Início do Contêiner Principal -->
   <div class="container">
-    <div class="header">
+<!-- Início do Cabeçalho (Banner) -->
+    <header class="header" role="banner" aria-label="Cabeçalho da Fábrica Vita Gula">
       <div class="title-container">
         <h1>Fábrica Vita Gula</h1>
         <p>Sabor, Tradição e Qualidade Desde 2001</p>
       </div>
       <div class="audio-controls" role="region" aria-label="Controles de áudio">
         <div class="control-buttons">
-          <span class="control-btn" id="prev-btn" onclick="playClickSound(); playPrevious()" onmouseover="playHoverSound()" aria-label="Tocar faixa anterior">⏮</span>
-          <span class="control-btn play-pause-btn" id="play-pause-btn" onclick="playClickSound(); togglePlayPause()" onmouseover="playHoverSound()" aria-label="Tocar ou pausar">▶</span>
-          <span class="control-btn" id="next-btn" onclick="playClickSound(); playNext()" onmouseover="playHoverSound()" aria-label="Tocar próxima faixa">⏭</span>
+          <span class="control-btn play-pause-btn" id="play-pause-btn" onclick="playClickSound(); togglePlayPause()" onmouseover="playHoverSound()" aria-label="Tocar ou pausar" tabindex="0" onkeydown="if(event.key === 'Enter') { playClickSound(); togglePlayPause(); }">▶</span>
+          <div class="track-controls">
+            <span class="control-btn" id="prev-btn" onclick="playClickSound(); playPrevious()" onmouseover="playHoverSound()" aria-label="Tocar faixa anterior" tabindex="0" onkeydown="if(event.key === 'Enter') { playClickSound(); playPrevious(); }">⏮</span>
+            <div class="waveform" id="waveform">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+            <span class="control-btn" id="next-btn" onclick="playClickSound(); playNext()" onmouseover="playHoverSound()" aria-label="Tocar próxima faixa" tabindex="0" onkeydown="if(event.key === 'Enter') { playClickSound(); playNext(); }">⏭</span>
+          </div>
+          <span class="volume-icon low" id="volume-icon" onclick="playClickSound(); changeVolume()" onmouseover="playHoverSound()" aria-label="Ajustar volume" tabindex="0" onkeydown="if(event.key === 'Enter') { playClickSound(); changeVolume(); }">
+            <svg class="volume-mute" viewBox="0 0 24 24" style="display: none;">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm11 0l3.5 3.5L14 15V9zm5.5 3l-2.5-2.5L19.5 7l2.5 2.5L stims19.5 12z"/>
+            </svg>
+            <svg class="volume-low" viewBox="0 0 24 24">
+              <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+            </svg>
+            <svg class="volume-medium" viewBox="0 0 24 24" style="display: none;">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+            </svg>
+            <svg class="volume-high" viewBox="0 0 24 24" style="display: none;">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+          </span>
         </div>
-        <div class="waveform" id="waveform">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-        </div>
-        <span class="volume-icon low" id="volume-icon" onclick="playClickSound(); changeVolume()" onmouseover="playHoverSound()" aria-label="Ajustar volume">
-          <svg class="volume-mute" viewBox="0 0 24 24" style="display: none;">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm11 0l3.5 3.5L14 15V9zm5.5 3l-2.5-2.5L19.5 7l2.5 2.5L19.5 12z"/>
-          </svg>
-          <svg class="volume-low" viewBox="0 0 24 24">
-            <path d="M3 9v6h4l5 5V4L7 9H3z"/>
-          </svg>
-          <svg class="volume-medium" viewBox="0 0 24 24" style="display: none;">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
-          </svg>
-          <svg class="volume-high" viewBox="0 0 24 24" style="display: none;">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-          </svg>
-        </span>
       </div>
-    </div>
+    </header>
+<!-- Fim do Cabeçalho (Banner) -->
+
+<!-- Início da Barra de Navegação -->
     <div class="nav-menu" role="navigation" aria-label="Menu principal">
       <a class="nav-item" href="https://gvitagula.github.io/site/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Página Principal</a>
       <a class="nav-item" href="https://gvitagula.github.io/quemsomos/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Quem Somos</a>
@@ -712,6 +778,9 @@
       </div>
       <a class="nav-item" href="https://gvitagula.github.io/parceiros/" onclick="playClickSound()" onmouseover="playHoverSound()" role="tab" aria-selected="false">Parceiros</a>
     </div>
+<!-- Fim da Barra de Navegação -->
+
+<!-- Início do Conteúdo Principal -->
     <div class="tab-content">
       <h3>Nossos Pães</h3>
       <button class="expand-btn" onclick="toggleExpand()">Exibir</button>
@@ -794,8 +863,11 @@
       </div>
       <div class="visitor-counter">Visitas: <span id="visit-count">1000</span></div>
     </div>
+<!-- Fim do Conteúdo Principal -->
   </div>
+<!-- Fim do Contêiner Principal -->
 
+<!-- Início da Sobreposição de Zoom de Imagens -->
   <div class="zoom-overlay" id="zoom-overlay" role="dialog" aria-label="Galeria de imagens ampliada" aria-live="polite">
     <div class="zoom-image-container">
       <img class="zoom-image" id="zoom-image" src="" alt="Imagem ampliada" aria-hidden="false">
@@ -805,7 +877,9 @@
       </div>
     </div>
   </div>
+<!-- Fim da Sobreposição de Zoom de Imagens -->
 
+<!-- Início dos Elementos de Áudio -->
   <audio id="background-audio" preload="auto">
     <source id="audio-source" src="https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/musica1.mp3" type="audio/mpeg">
     Seu navegador não suporta o elemento de áudio.
@@ -818,12 +892,16 @@
     <source src="https://raw.githubusercontent.com/gvitagula/site/refs/heads/main/aud/botao2.mp3" type="audio/mpeg">
     Seu navegador não suporta o elemento de áudio.
   </audio>
+<!-- Fim dos Elementos de Áudio -->
 
+<!-- Início da Mensagem de Oferta (Pop-up) -->
   <div id="megaphone-message" class="megaphone-message">
     🎉 Temos boas ofertas para você! 🎉
     <button onclick="hideMegaphoneMessage()" style="margin-top: 10px; padding: 5px 10px; background-color: #ffffff; color: #ff6f61; border: none; border-radius: 5px; cursor: pointer;">Fechar</button>
   </div>
+<!-- Fim da Mensagem de Oferta (Pop-up) -->
 
+<!-- Início do Script JavaScript Principal -->
   <script>
     let volumeLevel = 0;
     const audio = document.getElementById('background-audio');
@@ -1108,5 +1186,6 @@
       activateMegaphone();
     });
   </script>
+<!-- Fim do Script JavaScript Principal -->
 </body>
 </html>
